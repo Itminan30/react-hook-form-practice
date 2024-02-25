@@ -3,10 +3,21 @@ import Field from "../Form/Field";
 import FieldSet from "../Form/FieldSet";
 
 const LoginForm = () => {
-    const { register, handleSubmit, formState: {errors} } = useForm();
+    const { register, handleSubmit, formState: { errors }, setError } = useForm();
 
     const submitForm = (formData) => {
         console.log(formData);
+        const user = {
+            email: "abc@gmail.com",
+            password: "qwerasdfzxcv",
+        }
+        const found = user.email === formData.email && user.password === formData.password;
+        if (!found) {
+            setError("root.random", {
+                message: `User with email id: ${formData.email} not found`,
+                type: "UserNotFoundError"
+            })
+        }
     }
 
     return (
@@ -17,7 +28,7 @@ const LoginForm = () => {
                     <Field label={"Email:"} error={errors["email"]}>
                         <input
                             {...register("email", { required: "Email is required" })}
-                            className="p-2 border box-border w-[300px] rounded-md border-gray-200"
+                            className={`p-2 border box-border w-[300px] rounded-md ${errors["email"] ? "border-red-500" : "border-gray-200"}`}
                             type="text"
                             name="email"
                             id="email"
@@ -27,8 +38,8 @@ const LoginForm = () => {
                     <Field label={"Password:"} error={errors["password"]}>
                         <input
                             {...register(
-                                "password", 
-                                { 
+                                "password",
+                                {
                                     required: "Password is required",
                                     minLength: {
                                         value: 8,
@@ -36,13 +47,15 @@ const LoginForm = () => {
                                     }
                                 }
                             )}
-                            className="p-2 border box-border w-[300px] rounded-md border-gray-200"
+                            className={`p-2 border box-border w-[300px] rounded-md ${errors["password"] ? "border-red-500" : "border-gray-200"}`}
                             type="password"
                             name="password"
                             id="password"
                             placeholder="Enter Password" />
                     </Field>
-
+                    <div className="text-red-500">
+                        {errors?.root?.random?.message}
+                    </div>
                     <Field>
                         <button
                             className="text-md text-white cursor-pointer p-2 border rounded-lg bg-purple-500">
