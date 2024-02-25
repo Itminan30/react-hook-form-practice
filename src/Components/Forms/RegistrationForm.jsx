@@ -1,14 +1,18 @@
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import Field from "../Form/Field";
 import FieldSet from "../Form/FieldSet";
 
 const RegistrationForm = () => {
-    const { register, handleSubmit, formState: { errors }, setError } = useForm();
+    const { register, handleSubmit, formState: { errors }, setError, control } = useForm();
+    const { fields, append, remove } = useFieldArray({
+        name: "socials",
+        control
+    });
 
     const submitForm = (formData) => {
         console.log(formData);
     }
-
+    console.log(fields);
     return (
         <div className="flex flex-col justify-center items-center">
             <form onSubmit={handleSubmit(submitForm)}>
@@ -75,6 +79,39 @@ const RegistrationForm = () => {
                             id="password"
                             placeholder="Enter Password" />
                     </Field>
+                    {/* Social Fieldsets */}
+                    <FieldSet label={"Enter Social Handles"} >
+                        {
+                            fields.map((field, index) => (
+                                <div
+                                    className="flex justify-between items-center w-max"
+                                    key={field.id}>
+                                        <Field label={"Social Name"}>
+                                            <input 
+                                            {...register(`socials[${index}].name`)}
+                                            id={`socials[${index}].name`}
+                                            name={`socials[${index}].name`}
+                                            type="text"
+                                            className="p-2 border box-border rounded-md w-full"/>
+                                        </Field>
+                                        <Field label={"Social URL"}>
+                                            <input 
+                                            {...register(`socials[${index}].url`)}
+                                            id={`socials[${index}].url`}
+                                            name={`socials[${index}].url`}
+                                            type="text"
+                                            className="p-2 border box-border rounded-md w-full"/>
+                                        </Field>
+                                </div>
+                            ))
+                        }
+                        <button
+                            className="mt-8 text-md text-white cursor-pointer border rounded-lg bg-gray-500 p-2 m-auto"
+                            onClick={() => append({ name: "", url: "" })}
+                        >
+                            Add a Social Handle
+                        </button>
+                    </FieldSet>
                     <div className="text-red-500">
                         {errors?.root?.random?.message}
                     </div>
