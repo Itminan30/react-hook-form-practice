@@ -138,7 +138,7 @@ const RegistrationForm = () => {
                     <Field>
                         <button
                             className="text-md text-white cursor-pointer p-2 border rounded-lg bg-purple-500">
-                            Login
+                            Register
                         </button>
                     </Field>
                 </FieldSet>
