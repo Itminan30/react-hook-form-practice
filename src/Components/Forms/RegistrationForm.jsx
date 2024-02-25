@@ -1,6 +1,7 @@
-import { useFieldArray, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import Field from "../Form/Field";
 import FieldSet from "../Form/FieldSet";
+import NumberInput from "../Form/NumberInput";
 
 const RegistrationForm = () => {
     const { register, handleSubmit, formState: { errors }, setError, control } = useForm();
@@ -29,26 +30,27 @@ const RegistrationForm = () => {
                     </Field>
                     {/* Age Field */}
                     <Field label={"Age:"} error={errors["age"]}>
-                        <input
-                            {...register(
-                                "age",
-                                {
-                                    required: "Age is required",
-                                    max: {
-                                        value: 100,
-                                        message: "Age must be between 0 and 100"
-                                    },
-                                    min: {
-                                        value: 0,
-                                        message: "Age must be between 0 and 100"
-                                    }
-                                }
-                            )}
-                            className={`p-2 border box-border w-[300px] rounded-md ${errors["age"] ? "border-red-500" : "border-gray-200"}`}
-                            type="number"
+                        <Controller
                             name="age"
-                            id="age"
-                            placeholder="Enter Age" />
+                            control={control}
+                            defaultValue={1}
+                            render={({ field: { ref, ...field } }) => (
+                                <NumberInput
+                                    id="age"
+                                    className={`p-2 border box-border w-full rounded-md ${errors.age
+                                            ? "border-red-500"
+                                            : "border-gray-200"
+                                        }`}
+                                    {...field}
+                                />
+                            )}
+                            rules={{
+                                max: {
+                                    value: 100,
+                                    message: "Age can be between 0 and 100",
+                                },
+                            }}
+                        />
                     </Field>
                     {/* Email Field */}
                     <Field label={"Email:"} error={errors["email"]}>
