@@ -38,8 +38,8 @@ const RegistrationForm = () => {
                                 <NumberInput
                                     id="age"
                                     className={`p-2 border box-border w-full rounded-md ${errors.age
-                                            ? "border-red-500"
-                                            : "border-gray-200"
+                                        ? "border-red-500"
+                                        : "border-gray-200"
                                         }`}
                                     {...field}
                                 />
@@ -50,6 +50,17 @@ const RegistrationForm = () => {
                                     message: "Age can be between 0 and 100",
                                 },
                             }}
+                        />
+                    </Field>
+                    {/* Picture Field */}
+                    <Field label="Picture" error={errors.picture}>
+                        <input
+                            {...register("picture", {
+                                required: "Picture is required",
+                            })}
+                            type="file"
+                            id="picture"
+                            name="picture"
                         />
                     </Field>
                     {/* Email Field */}
