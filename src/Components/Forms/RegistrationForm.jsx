@@ -23,6 +23,29 @@ const RegistrationForm = () => {
                             id="fname"
                             placeholder="Enter Full Name" />
                     </Field>
+                    {/* Age Field */}
+                    <Field label={"Age:"} error={errors["age"]}>
+                        <input
+                            {...register(
+                                "age",
+                                {
+                                    required: "Age is required",
+                                    max: {
+                                        value: 100,
+                                        message: "Age must be between 0 and 100"
+                                    },
+                                    min: {
+                                        value: 0,
+                                        message: "Age must be between 0 and 100"
+                                    }
+                                }
+                            )}
+                            className={`p-2 border box-border w-[300px] rounded-md ${errors["age"] ? "border-red-500" : "border-gray-200"}`}
+                            type="number"
+                            name="age"
+                            id="age"
+                            placeholder="Enter Age" />
+                    </Field>
                     {/* Email Field */}
                     <Field label={"Email:"} error={errors["email"]}>
                         <input
