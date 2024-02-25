@@ -12,7 +12,7 @@ const RegistrationForm = () => {
     const submitForm = (formData) => {
         console.log(formData);
     }
-    console.log(fields);
+
     return (
         <div className="flex flex-col justify-center items-center">
             <form onSubmit={handleSubmit(submitForm)}>
@@ -86,28 +86,35 @@ const RegistrationForm = () => {
                                 <div
                                     className="flex justify-between items-center w-max"
                                     key={field.id}>
-                                        <Field label={"Social Name"}>
-                                            <input 
+                                    <Field label={"Social Name"}>
+                                        <input
                                             {...register(`socials[${index}].name`)}
                                             id={`socials[${index}].name`}
                                             name={`socials[${index}].name`}
                                             type="text"
-                                            className="p-2 border box-border rounded-md w-full"/>
-                                        </Field>
-                                        <Field label={"Social URL"}>
-                                            <input 
+                                            className="p-2 border box-border rounded-md w-full" />
+                                    </Field>
+                                    <Field label={"Social URL"}>
+                                        <input
                                             {...register(`socials[${index}].url`)}
                                             id={`socials[${index}].url`}
                                             name={`socials[${index}].url`}
                                             type="text"
-                                            className="p-2 border box-border rounded-md w-full"/>
-                                        </Field>
+                                            className="p-2 border box-border rounded-md w-full" />
+                                    </Field>
+                                    <button
+                                        className="mt-8 mr-2 text-2xl"
+                                        onClick={() => remove(index)}
+                                    >
+                                        &#8722;
+                                    </button>
                                 </div>
                             ))
                         }
                         <button
                             className="mt-8 text-md text-white cursor-pointer border rounded-lg bg-gray-500 p-2 m-auto"
                             onClick={() => append({ name: "", url: "" })}
+                            type="button"
                         >
                             Add a Social Handle
                         </button>
