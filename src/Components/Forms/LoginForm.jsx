@@ -3,7 +3,7 @@ import Field from "../Form/Field";
 import FieldSet from "../Form/FieldSet";
 
 const LoginForm = () => {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, formState: {errors} } = useForm();
 
     const submitForm = (formData) => {
         console.log(formData);
@@ -14,9 +14,9 @@ const LoginForm = () => {
             <form onSubmit={handleSubmit(submitForm)}>
                 <FieldSet label={"Enter Login Details"}>
                     {/* Email Field */}
-                    <Field label={"Email:"}>
+                    <Field label={"Email:"} error={errors["email"]}>
                         <input
-                            {...register("email")}
+                            {...register("email", { required: "Email is required" })}
                             className="p-2 border box-border w-[300px] rounded-md border-gray-200"
                             type="text"
                             name="email"
@@ -24,9 +24,18 @@ const LoginForm = () => {
                             placeholder="Enter Email Address" />
                     </Field>
                     {/* Password Field */}
-                    <Field label={"Password:"}>
+                    <Field label={"Password:"} error={errors["password"]}>
                         <input
-                            {...register("password")}
+                            {...register(
+                                "password", 
+                                { 
+                                    required: "Password is required",
+                                    minLength: {
+                                        value: 8,
+                                        message: "Your Password must be atleast 8 characters"
+                                    }
+                                }
+                            )}
                             className="p-2 border box-border w-[300px] rounded-md border-gray-200"
                             type="password"
                             name="password"
